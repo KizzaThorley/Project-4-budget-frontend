@@ -4,6 +4,7 @@ import Home from './components/Home'
 import NavBar from './components/NavBar'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
+import Expense from './components/Expense'
 
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
   <Route path="/" element={<Home/>} />
   <Route path="/sign-up" element={<SignUp/>} />
   <Route path="/login" element={<Login/>} />
+  <Route path="/expense" element={<Expense/>} />
 </Routes>
 
   </Router>
