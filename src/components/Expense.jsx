@@ -69,8 +69,6 @@ export default function Expense() {
                             
                         </select>
                     </div>
-
-
                     <button>Submit</button>
                 </form>
             </div>

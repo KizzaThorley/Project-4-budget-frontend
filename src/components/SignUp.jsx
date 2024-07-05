@@ -9,98 +9,105 @@ export default function SignUp() {
         password_confirmation: '',
         first_name: '',
         last_name: '',
-    }, [])
+    })
 
     function handleChange(e) {
         const newFormData = structuredClone(formData)
         newFormData[e.target.name] = e.target.value
         setFormData(newFormData)
     }
-console.log(formData);
+    console.log(formData);
+
     return (
-        <div className='flex item-center justify-center'>
-            <div className=''>
-                <h1>Sign Up</h1>
+        <div className='flex justify-center min-h-screen bg-gray-100'>
+            <div className='bg-white p-8 rounded-lg shadow-md w-full max-w-md mt-5 h-fit'>
+                <h1 className='text-2xl font-bold mb-6 text-center'>Sign Up</h1>
                 <form>
-                    <div>
-                        <label>Username</label>
+                    <div className='mb-4'>
+                        <label className='block text-gray-700'>Username</label>
                         <div>
                             <input
+                                className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500'
                                 placeholder="Username"
                                 type="text"
-                                name={'username'}
+                                name='username'
                                 onChange={handleChange}
                                 value={formData.username}
                                 required
                             />
                         </div>
                     </div>
-                    <div>
-                        <label>Email</label>
+                    <div className='mb-4'>
+                        <label className='block text-gray-700'>Email</label>
                         <div>
                             <input
+                                className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500'
                                 placeholder="example@example.com"
                                 type="text"
-                                name={'email'}
+                                name='email'
                                 onChange={handleChange}
                                 value={formData.email}
                                 required
                             />
                         </div>
                     </div>
-                    <div>
-                        <label >Password</label>
+                    <div className='mb-4'>
+                        <label className='block text-gray-700'>Password</label>
                         <div>
                             <input
+                                className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500'
                                 placeholder="Password"
                                 type="password"
-                                name={'password'}
+                                name='password'
                                 onChange={handleChange}
                                 value={formData.password}
                                 required
                             />
                         </div>
                     </div>
-                    <div>
-                        <label >Password Confirmation</label>
+                    <div className='mb-4'>
+                        <label className='block text-gray-700'>Password Confirmation</label>
                         <div>
                             <input
+                                className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500'
                                 placeholder="Password Confirmation"
                                 type="password"
-                                name={'password_confirmation'}
+                                name='password_confirmation'
                                 onChange={handleChange}
                                 value={formData.password_confirmation}
                                 required
                             />
-                            <div>
-                                <label>First Name</label>
-                                <div>
-                                    <input
-                                        placeholder="First Name"
-                                        type="text"
-                                        name={'first_name'}
-                                        onChange={handleChange}
-                                        value={formData.first_name}
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <label>Last Name</label>
-                                <div>
-                                    <input
-                                        placeholder="Last Name"
-                                        type="text"
-                                        name={'last_name'}
-                                        onChange={handleChange}
-                                        value={formData.last_name}
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <button>Submit</button>
                         </div>
                     </div>
+                    <div className='mb-4'>
+                        <label className='block text-gray-700'>First Name</label>
+                        <div>
+                            <input
+                                className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500'
+                                placeholder="First Name"
+                                type="text"
+                                name='first_name'
+                                onChange={handleChange}
+                                value={formData.first_name}
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div className='mb-6'>
+                        <label className='block text-gray-700'>Last Name</label>
+                        <div>
+                            <input
+                                className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500'
+                                placeholder="Last Name"
+                                type="text"
+                                name='last_name'
+                                onChange={handleChange}
+                                value={formData.last_name}
+                                required
+                            />
+                        </div>
+                    </div>
+                    <button className='w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200'>Submit</button>
                 </form>
             </div>
         </div>
