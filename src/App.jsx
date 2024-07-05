@@ -8,6 +8,7 @@ import Expense from './components/Expense'
 import React from 'react'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify'
+import Budget from './components/Budget'
 
 
 
@@ -35,10 +36,10 @@ setIsLoggedIn={setIsLoggedIn} />
   <Route path="/" element={<Home/>} />
   <Route path="/sign-up" element={<SignUp/>} />
   <Route path="/login" element={<Login
-  isLoggedIn={isLoggedIn}
   setIsLoggedIn={setIsLoggedIn}
   />} />
   <Route path="/expense" element={<Expense/>} />
+  <Route path="/my-budget" element={<Budget/>} />
 </Routes>
 
   </Router>

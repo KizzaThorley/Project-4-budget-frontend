@@ -1,6 +1,11 @@
 import React from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
-export default function Login() {
+export default function Login( { setIsLoggedIn } ) {
+
+    const navigate = useNavigate()
 
     const [formData, setFormData] = React.useState({
         email: '',
@@ -14,11 +19,32 @@ export default function Login() {
     }
     console.log(formData);
 
+    async function onFormSubmit(e) {
+        e.preventDefault()
+        try {
+            const { data } = await axios.post(`http://localhost:8000/api/auth/login/`, formData)
+
+            const token = data.token
+
+            localStorage.setItem('token', token)
+
+            setIsLoggedIn(localStorage.getItem('token'))
+            console.log('login successful');
+            toast(data.message)
+
+            navigate('/')
+        } catch (error) {
+            toast.error(error.response.data.detail, {
+                autoClose: 2500,
+            })
+        }
+    }
+
     return (
         <div className='flex justify-center min-h-screen bg-gray-100'>
             <div className='bg-white p-8 rounded-lg shadow-md w-full max-w-md mt-5 h-fit'>
                 <h1 className='text-2xl font-bold mb-6 text-center'>Login</h1>
-                <form>
+                <form onSubmit={onFormSubmit}>
                     <div className='mb-4'>
                         <label className='block text-gray-700'>Email</label>
                         <div>

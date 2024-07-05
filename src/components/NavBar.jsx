@@ -1,12 +1,29 @@
-// import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-export default function NavBar() {
+export default function NavBar({ isLoggedIn, setIsLoggedIn }) {
+
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  React.useEffect(() => {
+    setIsLoggedIn(localStorage.getItem('token'))
+  }, [location, setIsLoggedIn])
+
+  function logout() {
+    localStorage.removeItem('token')
+    setIsLoggedIn(false)
+    navigate('/')
+  }
+
+
   return (
     <div className='bg-gradient-to-r from-green-500 to-blue-700 shadow p-8 bg-gradient-to-t flex gap-10'>
       <Link to="/" className=''>Home</Link>
-      <Link to="/login" className=''>Login</Link>
-      <Link to="/sign-up" className=''>SignUp</Link>
+      {!isLoggedIn && <Link to="/login" className=''>Login</Link>}
+      {!isLoggedIn && <Link to="/sign-up" className=''>SignUp</Link>}
+      {isLoggedIn && <Link to="/my-budget" className=''>Your Budget</Link>}
+      {isLoggedIn && <button onClick={logout}>Sign Out</button>}
     </div>
   )
 }
