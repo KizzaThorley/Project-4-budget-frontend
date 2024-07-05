@@ -1,6 +1,10 @@
+import axios from 'axios'
 import React from 'react'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 export default function SignUp() {
+    const navigate = useNavigate()
 
     const [formData, setFormData] = React.useState({
         username: '',
@@ -18,11 +22,39 @@ export default function SignUp() {
     }
     console.log(formData);
 
+    async function onFormSubmit(e) {
+        e.preventDefault()
+        try {
+            const { data } = await axios.post('http://localhost:8000/api/auth/register/', formData)
+            toast(data.message)
+            navigate('/login')
+        } catch (error) {
+            console.log(error.response.data.password_confirmation);
+            if (error.response.data.username) {
+                toast.error(error.response.data.username[0], {
+                    autoClose: 3000,
+                });
+            } else if (error.response.data.email) {
+                toast.error(error.response.data.email[0], {
+                    autoClose: 3000,
+                });
+            } else if (error.response.data.password_confirmation) {
+                toast.error(`Passwords ${error.response.data.password_confirmation[0]}`, {
+                    autoClose: 3000,
+                });
+            } else {
+                toast.error(error.response.data.message[0], {
+                    autoClose: 3000,
+                });
+            }
+        }
+    }
+
     return (
         <div className='flex justify-center min-h-screen bg-gray-100'>
             <div className='bg-white p-8 rounded-lg shadow-md w-full max-w-md mt-5 h-fit'>
                 <h1 className='text-2xl font-bold mb-6 text-center'>Sign Up</h1>
-                <form>
+                <form onSubmit={onFormSubmit}>
                     <div className='mb-4'>
                         <label className='block text-gray-700'>Username</label>
                         <div>

@@ -5,15 +5,39 @@ import NavBar from './components/NavBar'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
 import Expense from './components/Expense'
+import React from 'react'
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify'
+
 
 
 export default function App() {
+const [isLoggedIn, setIsLoggedIn] = React.useState(localStorage.getItem('token'))
+
   return (<Router>
-<NavBar />
+<NavBar
+isLoggedIn={isLoggedIn}
+setIsLoggedIn={setIsLoggedIn} />
+ <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss={false}
+      pauseOnHover
+      draggable={false}
+      theme="dark"
+      transition: Slide
+/>
 <Routes>
   <Route path="/" element={<Home/>} />
   <Route path="/sign-up" element={<SignUp/>} />
-  <Route path="/login" element={<Login/>} />
+  <Route path="/login" element={<Login
+  isLoggedIn={isLoggedIn}
+  setIsLoggedIn={setIsLoggedIn}
+  />} />
   <Route path="/expense" element={<Expense/>} />
 </Routes>
 
