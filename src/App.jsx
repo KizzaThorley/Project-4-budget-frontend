@@ -4,7 +4,6 @@ import Home from './components/Home'
 import NavBar from './components/NavBar'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
-import Expense from './components/Expense'
 import React from 'react'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify'
@@ -15,7 +14,7 @@ import Budget from './components/Budget'
 export default function App() {
 const [isLoggedIn, setIsLoggedIn] = React.useState(localStorage.getItem('token'))
 
-  return (<Router data-theme='dracula' >
+  return (<Router>
 <NavBar
 isLoggedIn={isLoggedIn}
 setIsLoggedIn={setIsLoggedIn} />
@@ -38,7 +37,6 @@ setIsLoggedIn={setIsLoggedIn} />
   <Route path="/login" element={<Login
   setIsLoggedIn={setIsLoggedIn}
   />} />
-  <Route path="/expense" element={<Expense/>} />
   <Route path="/my-budget" element={<Budget/>} />
 </Routes>
 

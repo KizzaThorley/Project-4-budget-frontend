@@ -1,9 +1,11 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import BudgetGraph from './BudgetGraph';
+import Expense from './Expense'
+import ExpensesView from './ExpensesView';
 
 export default function Budget() {
-    const [budgetData, setBudgetData] = useState({
+    const [budgetData, setBudgetData] = React.useState({
         amount: '',
         id: '',
         month: '',
@@ -12,7 +14,7 @@ export default function Budget() {
         owner: '',
     });
 
-    const [allBudgets, setAllBudgets] = useState([]);
+    const [allBudgets, setAllBudgets] = React.useState([]);
 
     async function getBudgets() {
         const token = localStorage.getItem('token');
@@ -30,12 +32,10 @@ export default function Budget() {
             if (foundData) {
                 setBudgetData(foundData);
             } else {
-                const newBudgetData = {
-                    ...budgetData,
-                    amount: 0,
-                    month: currentMonth,
-                    year: currentYear
-                };
+                const newBudgetData = structuredClone(budgetData);
+                newBudgetData.amount = 0;
+                newBudgetData.month = currentMonth;
+                newBudgetData.year = currentYear;
                 const postResponse = await axios.post('http://localhost:8000/api/budget/', newBudgetData, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
@@ -44,8 +44,10 @@ export default function Budget() {
                 setAllBudgets(data);
             }
         } else {
-            const newBudgetData = structuredClone(budgetData)
-            newBudgetData.amount = 0
+            const newBudgetData = structuredClone(budgetData);
+            newBudgetData.amount = 0;
+            newBudgetData.month = currentMonth;
+            newBudgetData.year = currentYear;
             const postResponse = await axios.post('http://localhost:8000/api/budget/', newBudgetData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -54,20 +56,25 @@ export default function Budget() {
         }
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         getBudgets();
     }, []);
 
     // console.log(allBudgets);
 
     return (
-        <div className='flex flex-wrap items-center justify-center flex-col'>
+        <div className='flex flex-wrap items-center justify-center flex-col bg-gray-100'>
             <h1 className='text-3xl'>Your Budget</h1>
-            {budgetData && (
-                <BudgetGraph 
-                budgetData={budgetData}/>
-            
+            {budgetData && (<div>
+
+                <BudgetGraph
+                    budgetData={budgetData} />
+                <ExpensesView />
+                <Expense 
+                budgetId={budgetData.id}/>
+            </div>
             )}
+
         </div>
     );
 }

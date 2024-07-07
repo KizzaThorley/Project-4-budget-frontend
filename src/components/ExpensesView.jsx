@@ -1,0 +1,36 @@
+import React from 'react'
+
+export default function ExpensesView() {
+
+    const [viewExpenses, setViewExpenses] = React.useState(false)
+
+    function handleView() {
+        if (!viewExpenses) {
+            setViewExpenses(true)
+
+        } else {
+            setViewExpenses(false)
+
+        }
+    }
+  
+
+    return (
+        <div className='flex flex-wrap items-center justify-center mb-4'>
+        {viewExpenses ? (
+            <div className='flex flex-col items-center'>
+                <h1>This will show the expenses</h1>
+                <button onClick={handleView} className='text-center bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 transform hover:scale-105' style={{ width: '150px', height: '50px' }}>
+                    Hide Expenses
+                </button>
+            </div>
+        ) : (
+            <div className='flex flex-col items-center'>
+                <button onClick={handleView} className='bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 transform hover:scale-105' style={{ width: '150px', height: '50px' }}>
+                    View Expenses
+                </button>
+            </div>
+        )}
+    </div>
+    )
+}
