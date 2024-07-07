@@ -15,7 +15,7 @@ import Budget from './components/Budget'
 export default function App() {
 const [isLoggedIn, setIsLoggedIn] = React.useState(localStorage.getItem('token'))
 
-  return (<Router>
+  return (<Router data-theme='dracula' >
 <NavBar
 isLoggedIn={isLoggedIn}
 setIsLoggedIn={setIsLoggedIn} />

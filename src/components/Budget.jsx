@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import BudgetGraph from './BudgetGraph';
 
 export default function Budget() {
     const [budgetData, setBudgetData] = useState({
@@ -63,13 +64,9 @@ export default function Budget() {
         <div className='flex flex-wrap items-center justify-center flex-col'>
             <h1 className='text-3xl'>Your Budget</h1>
             {budgetData && (
-                <div>
-                    <p>Amount: {budgetData.amount}</p>
-                    <p>ID: {budgetData.id}</p>
-                    <p>Month: {budgetData.month}</p>
-                    <p>Year: {budgetData.year}</p>
-                    <p>Owner: {budgetData.owner}</p>
-                </div>
+                <BudgetGraph 
+                budgetData={budgetData}/>
+            
             )}
         </div>
     );
