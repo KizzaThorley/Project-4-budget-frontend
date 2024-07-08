@@ -68,10 +68,11 @@ export default function Budget() {
             {budgetData && (<div>
 
                 <BudgetGraph
-                    budgetData={budgetData} />
+                    budgetData={budgetData}
+                    setBudgetData={setBudgetData} />
                 <ExpensesView />
-                <Expense 
-                budgetId={budgetData.id}/>
+                <Expense
+                    budgetId={budgetData.id} />
             </div>
             )}
 

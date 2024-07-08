@@ -2,10 +2,11 @@
 
 import PieChart from "./PieChart";
 import { ArcElement, Chart} from 'chart.js';
+import UpdateBudget from './UpdateBudget'
 
 
 
-export default function BudgetGraph({ budgetData }) {
+export default function BudgetGraph({ budgetData, setBudgetData }) {
     Chart.register(ArcElement)
 
     const data = {
@@ -17,7 +18,9 @@ export default function BudgetGraph({ budgetData }) {
   return (
     <div className='flex flex-wrap items-center justify-center flex-col'>
       <h1>{budgetData.amount}</h1>
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">Update Budget</button>
+      <UpdateBudget
+      budgetData={budgetData}
+      setBudgetData={setBudgetData}/>
       <PieChart data={data} />
     </div>
   )
