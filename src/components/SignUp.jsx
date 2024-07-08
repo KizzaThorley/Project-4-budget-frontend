@@ -20,7 +20,7 @@ export default function SignUp() {
         newFormData[e.target.name] = e.target.value
         setFormData(newFormData)
     }
-    console.log(formData);
+    // console.log(formData);
 
     async function onFormSubmit(e) {
         e.preventDefault()

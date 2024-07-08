@@ -17,7 +17,7 @@ export default function Login( { setIsLoggedIn } ) {
         newFormData[e.target.name] = e.target.value
         setFormData(newFormData)
     }
-    console.log(formData);
+    // console.log(formData);
 
     async function onFormSubmit(e) {
         e.preventDefault()

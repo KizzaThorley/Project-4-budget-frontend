@@ -72,7 +72,9 @@ export default function Budget() {
                     setBudgetData={setBudgetData} />
                 <ExpensesView />
                 <Expense
-                    budgetId={budgetData.id} />
+                    budgetId={budgetData.id} 
+                    setBudgetData={setBudgetData}
+                    />
             </div>
             )}
 

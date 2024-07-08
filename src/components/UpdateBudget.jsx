@@ -45,7 +45,7 @@ export default function UpdateBudget({ budgetData, setBudgetData }) {
         }
     }
 
-    console.log(budgetData.expenses);
+   
     function handleChange(e) {
         const newFormData = structuredClone(formData)
         newFormData[e.target.name] = e.target.value
