@@ -63,17 +63,19 @@ export default function Budget() {
     // console.log(allBudgets);
 
     return (
-        <div className='flex flex-wrap items-center justify-center flex-col bg-gray-100'>
+        <div className='flex items-center flex-col bg-gray-100'>
             <h1 className='text-3xl'>Your Budget</h1>
             {budgetData && (<div>
 
                 <BudgetGraph
                     budgetData={budgetData}
                     setBudgetData={setBudgetData} />
-                <ExpensesView
-                    budgetData={budgetData}
-                    setBudgetData={setBudgetData}
-                />
+                <div className='w-4/5 mx-auto'>
+                    <ExpensesView
+                        budgetData={budgetData}
+                        setBudgetData={setBudgetData}
+                    />
+                </div>
                 <Expense
                     budgetId={budgetData.id}
                     setBudgetData={setBudgetData}

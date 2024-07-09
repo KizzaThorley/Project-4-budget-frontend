@@ -28,13 +28,20 @@ export default function BudgetGraph({ budgetData, setBudgetData }) {
     cost
   }));
 
-  // console.log(chartData);
+ 
   
 let labelsArray = [];
 chartData.map(data => labelsArray.push(data.category));
 
 let dataArray = [];
 chartData.map(data => dataArray.push(data.cost));
+
+
+let spentBudget = budgetData.amount;
+let totalExpenses = budgetData.expenses.reduce((acc, expense) => acc + expense.cost, 0);
+let remainingBudget = spentBudget - totalExpenses;
+
+
 
 const data = {
   labels: labelsArray,
@@ -57,15 +64,17 @@ const data = {
 
 const options = {}
 
-// console.log(data);
 
   return (
-    <div className='flex flex-wrap items-center justify-center flex-col mb-5'>
-      <h1>{budgetData.amount}</h1>
-      <UpdateBudget
-        budgetData={budgetData}
-        setBudgetData={setBudgetData} />
-      <Pie data={data} options={options}/>
+    <div className='w-full flex flex-col items-center'>
+    <div className='flex flex-col items-center mb-5'>
+        <h1>Overall: £{budgetData.amount}</h1>
+        <h1>LeftOver: £{remainingBudget}</h1>
+        <UpdateBudget
+            budgetData={budgetData}
+            setBudgetData={setBudgetData} />
+        <Pie data={data} options={options} />
+    </div>
     </div>
   )
 }
