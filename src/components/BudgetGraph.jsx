@@ -1,81 +1,90 @@
-// import React from 'react'
-
-import  { Pie }  from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js'
-import UpdateBudget from './UpdateBudget'
-
-
-
+import React from 'react'
+import { Pie, Doughnut, Bar } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
+import UpdateBudget from './UpdateBudget';
 
 export default function BudgetGraph({ budgetData, setBudgetData }) {
+  ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
-  // const [overallExpenses, setOveralExpenses] = React.useState(0)
-  ChartJS.register(ArcElement, Tooltip, Legend)
+  const [formData, setFormData] = React.useState('Pie');
 
-  // function organiseExpenseData(expenses) {
-  const organisedExpenseData = budgetData.expenses.reduce((acc, expense) => {
-    if (!acc[expense.category]) {
-      acc[expense.category] = 0;
-    }
-    acc[expense.category] += expense.cost;
-    return acc;
-  }, {});
-  // console.log(organisedExpenseData);
-  //   return organiseExpenseData
-  // }
-  const chartData = Object.entries(organisedExpenseData).map(([category, cost]) => ({
-    category,
-    cost
-  }));
+  let organisedExpenseData = {};
+  let chartData = [];
+  let labelsArray = [];
+  let dataArray = [];
+  let spentBudget = budgetData.amount;
+  let totalExpenses = 0;
+  let remainingBudget = spentBudget;
 
- 
-  
-let labelsArray = [];
-chartData.map(data => labelsArray.push(data.category));
+  if (budgetData.expenses.length > 0) {
+    organisedExpenseData = budgetData.expenses.reduce((acc, expense) => {
+      if (!acc[expense.category]) {
+        acc[expense.category] = 0;
+      }
+      acc[expense.category] += expense.cost;
+      return acc;
+    }, {});
 
-let dataArray = [];
-chartData.map(data => dataArray.push(data.cost));
+    chartData = Object.entries(organisedExpenseData).map(([category, cost]) => ({
+      category,
+      cost
+    }));
 
+    labelsArray = chartData.map(data => data.category);
+    dataArray = chartData.map(data => data.cost);
+    totalExpenses = budgetData.expenses.reduce((acc, expense) => acc + expense.cost, 0);
+    remainingBudget = spentBudget - totalExpenses;
+  }
 
-let spentBudget = budgetData.amount;
-let totalExpenses = budgetData.expenses.reduce((acc, expense) => acc + expense.cost, 0);
-let remainingBudget = spentBudget - totalExpenses;
+  const data = {
+    labels: labelsArray,
+    datasets: [{
+      data: dataArray,
+      label: "Your Expenses",
+      backgroundColor: [
+        'red', 'blue', 'orange', 'green',
+        'aqua', 'purple', 'yellow', 'gold'
+      ],
+      hoverBackgroundColor: [
+        '#39FF14', '#39FF14', '#39FF14', '#39FF14',
+        '#39FF14', '#39FF14', '#39FF14', '#39FF14'
+      ],
+      hoverOffset: 4
+    }]
+  };
 
+  const options = {};
 
-
-const data = {
-  labels: labelsArray,
-  label: "Your Expenses",
-  datasets: [{
-    data: dataArray,
-    label: "Your Expenses",
-    backgroundColor: [
-      'red', 'blue', 'orange', 'green',
-      'aqua', 'purple', 'yellow', 'gold'
-    ],
-    hoverBackgroundColor: [
-      '#39FF14', '#39FF14', '#39FF14', '#39FF14',
-      '#39FF14', '#39FF14', '#39FF14', '#39FF14'
-    ],
-    hoverOffset: 4
-  }]
-}
-
-
-const options = {}
-
+  const handleSelectChange = (e) => {
+    setFormData(e.target.value);
+  };
 
   return (
     <div className='w-full flex flex-col items-center'>
-    <div className='flex flex-col items-center mb-5'>
+      <div className='flex flex-col items-center mb-5'>
         <h1>Overall: £{budgetData.amount}</h1>
-        <h1>LeftOver: £{remainingBudget}</h1>
+        {budgetData.expenses.length > 0 && <h1>LeftOver: £{remainingBudget}</h1>}
         <UpdateBudget
-            budgetData={budgetData}
-            setBudgetData={setBudgetData} />
-        <Pie data={data} options={options} />
+          budgetData={budgetData}
+          setBudgetData={setBudgetData} />
+        {budgetData.expenses.length > 0 && (
+          <div>
+            {formData === 'Pie' && <Pie data={data} options={options} />}
+            {formData === 'Bar' && <Bar data={data} options={options} />}
+            {formData === 'Doughnut' && <Doughnut data={data} options={options} />}
+            <select
+              className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500'
+              value={formData}
+              onChange={handleSelectChange}
+              required
+            >
+              <option value="Pie">Pie Chart</option>
+              <option value="Bar">Bar Graph</option>
+              <option value="Doughnut">Doughnut Chart</option>
+            </select>
+          </div>
+        )}
+      </div>
     </div>
-    </div>
-  )
+  );
 }
-

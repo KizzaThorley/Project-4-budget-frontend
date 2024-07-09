@@ -3,6 +3,7 @@ import React from 'react'
 import BudgetGraph from './BudgetGraph';
 import Expense from './Expense'
 import ExpensesView from './ExpensesView';
+import DeleteBudget from './DeleteBudget'
 
 export default function Budget() {
     const [budgetData, setBudgetData] = React.useState({
@@ -63,13 +64,13 @@ export default function Budget() {
     // console.log(allBudgets);
 
     return (
-        <div className='flex items-center flex-col bg-gray-100'>
+        <div className='flex items-center flex-col bg-gray-100 h-screen'>
             <h1 className='text-3xl'>Your Budget</h1>
             {budgetData && (<div>
-
                 <BudgetGraph
                     budgetData={budgetData}
                     setBudgetData={setBudgetData} />
+            
                 <div className='w-4/5 mx-auto'>
                     <ExpensesView
                         budgetData={budgetData}
@@ -82,7 +83,9 @@ export default function Budget() {
                 />
             </div>
             )}
-
+            <DeleteBudget 
+            budgetId={budgetData.id}
+            setBudgetData={setBudgetData}/>
         </div>
     );
 }
