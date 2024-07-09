@@ -8,6 +8,7 @@ import React from 'react'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify'
 import Budget from './components/Budget'
+import PastBudget from './components/PastBudget'
 
 
 
@@ -38,6 +39,7 @@ setIsLoggedIn={setIsLoggedIn} />
   setIsLoggedIn={setIsLoggedIn}
   />} />
   <Route path="/my-budget" element={<Budget/>} />
+  <Route path='/single-budgets/:budgetId' element={<PastBudget />} />
 </Routes>
 
   </Router>

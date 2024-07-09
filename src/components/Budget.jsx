@@ -4,8 +4,14 @@ import BudgetGraph from './BudgetGraph';
 import Expense from './Expense'
 import ExpensesView from './ExpensesView';
 import DeleteBudget from './DeleteBudget'
+import { useNavigate } from 'react-router-dom';
 
 export default function Budget() {
+    const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
+
+    const navigate = useNavigate()
     const [budgetData, setBudgetData] = React.useState({
         amount: '',
         id: '',
@@ -24,8 +30,6 @@ export default function Budget() {
         });
         setAllBudgets(data);
 
-        const currentMonth = new Date().getMonth() + 1;
-        const currentYear = new Date().getFullYear();
 
         if (data && data.length > 0) {
             const foundData = data.find(budget => budget.month === currentMonth && budget.year === currentYear);
@@ -57,20 +61,22 @@ export default function Budget() {
         }
     }
 
+    const filteredBudgets = allBudgets.filter(budget => !(budget.month === currentMonth && budget.year === currentYear));
+
     React.useEffect(() => {
         getBudgets();
     }, []);
 
-    // console.log(allBudgets);
+    
 
     return (
-        <div className='flex items-center flex-col bg-gray-100 h-screen'>
+        <div className='flex items-center flex-col min-h-screen bg-gray-100'>
             <h1 className='text-3xl'>Your Budget</h1>
             {budgetData && (<div>
                 <BudgetGraph
                     budgetData={budgetData}
                     setBudgetData={setBudgetData} />
-            
+
                 <div className='w-4/5 mx-auto'>
                     <ExpensesView
                         budgetData={budgetData}
@@ -83,9 +89,25 @@ export default function Budget() {
                 />
             </div>
             )}
-            <DeleteBudget 
-            budgetId={budgetData.id}
-            setBudgetData={setBudgetData}/>
+            
+            <div className='flex flex-col items-center mt-5'>
+                <h2 className='text-2xl mb-2'>Past Budgets</h2>
+                <div className='flex flex-wrap justify-center'>
+                    {filteredBudgets.length > 0 &&
+                        filteredBudgets.map((budget, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => navigate(`/single-budgets/${budget.id}`)}
+                                className='bg-blue-500 text-white rounded-lg px-4 py-2 m-2 hover:bg-blue-600 transition duration-200'>
+                                View {monthsArray[budget.month - 1]} {budget.year}
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+            <DeleteBudget
+                budgetId={budgetData.id}
+                setBudgetData={setBudgetData} />
         </div>
     );
 }

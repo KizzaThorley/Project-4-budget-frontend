@@ -2,9 +2,12 @@ import React from 'react'
 import { Pie, Doughnut, Bar } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
 import UpdateBudget from './UpdateBudget';
+import { useLocation } from 'react-router-dom';
 
 export default function BudgetGraph({ budgetData, setBudgetData }) {
   ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
+
+  const location = useLocation().pathname
 
   const [formData, setFormData] = React.useState('Pie');
 
@@ -64,9 +67,11 @@ export default function BudgetGraph({ budgetData, setBudgetData }) {
       <div className='flex flex-col items-center mb-5'>
         <h1>Overall: £{budgetData.amount}</h1>
         {budgetData.expenses.length > 0 && <h1>LeftOver: £{remainingBudget}</h1>}
+        {!location.includes('/single-budget') && 
         <UpdateBudget
           budgetData={budgetData}
           setBudgetData={setBudgetData} />
+        }
         {budgetData.expenses.length > 0 && (
           <div>
             {formData === 'Pie' && <Pie data={data} options={options} />}

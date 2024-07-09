@@ -2,8 +2,10 @@ import axios from 'axios'
 import React from 'react'
 import { toast } from 'react-toastify'
 import EditExpense from './EditExpense'
+import { useLocation } from 'react-router-dom'
 
 export default function ExpensesView({ budgetData, setBudgetData }) {
+    const location = useLocation().pathname
 
     const [viewExpenses, setViewExpenses] = React.useState(false)
 
@@ -46,7 +48,7 @@ export default function ExpensesView({ budgetData, setBudgetData }) {
             toast.error(error.response.data.message)
         }
     }
-
+   
     return (
         <div className='flex flex-wrap items-center justify-center mb-4 w-full'>
             {viewExpenses ? (
@@ -64,15 +66,19 @@ export default function ExpensesView({ budgetData, setBudgetData }) {
                                             <p><span className='font-bold'>Description:</span> {expense.description}</p>
                                             <p><span className='font-bold'>Cost:</span> {expense.cost}</p>
                                             <div className='flex justify-between mt-2 flex-col'>
+                                                {!location.includes('/single-budget') && 
+                                                <div> 
                                                 <button
-                                                    className='bg-red-500 text-white rounded-lg px-2 py-1 hover:bg-red-600 transition duration-200 mb-3'
-                                                    onClick={() => handleDelete(expense.id)}>
+                                                className='bg-red-500 text-white rounded-lg px-2 py-1 hover:bg-red-600 transition duration-200 mb-3'
+                                                onClick={() => handleDelete(expense.id)}>
                                                     Delete Expense
                                                 </button>
                                                 <EditExpense
-                                                    expense={expense}
-                                                    budgetId={budgetData.id}
-                                                    setBudgetData={setBudgetData} />
+                                                expense={expense}
+                                                budgetId={budgetData.id}
+                                                setBudgetData={setBudgetData} />
+                                            </div>
+                                            }
                                             </div>
                                         </div>
                                     ))}
