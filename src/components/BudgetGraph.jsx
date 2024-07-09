@@ -63,33 +63,32 @@ export default function BudgetGraph({ budgetData, setBudgetData }) {
   };
 
   return (
-    <div className='w-full flex flex-col items-center'>
-      <div className='flex flex-col items-center mb-5'>
-        <h1>Overall: £{budgetData.amount}</h1>
-        {budgetData.expenses.length > 0 && <h1>LeftOver: £{remainingBudget}</h1>}
-        {!location.includes('/single-budget') && 
+    <div className='w-full flex flex-col items-center mb-8'>
+      <div className='text-lg mb-4'>Overall: £{budgetData.amount}</div>
+      {budgetData.expenses.length > 0 && <div className='text-lg mb-4'>LeftOver: £{remainingBudget}</div>}
+      {!location.includes('/single-budget') &&
         <UpdateBudget
           budgetData={budgetData}
-          setBudgetData={setBudgetData} />
-        }
-        {budgetData.expenses.length > 0 && (
-          <div>
-            {formData === 'Pie' && <Pie data={data} options={options} />}
-            {formData === 'Bar' && <Bar data={data} options={options} />}
-            {formData === 'Doughnut' && <Doughnut data={data} options={options} />}
-            <select
-              className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500'
-              value={formData}
-              onChange={handleSelectChange}
-              required
-            >
-              <option value="Pie">Pie Chart</option>
-              <option value="Bar">Bar Graph</option>
-              <option value="Doughnut">Doughnut Chart</option>
-            </select>
-          </div>
-        )}
-      </div>
+          setBudgetData={setBudgetData}
+        />
+      }
+      {budgetData.expenses.length > 0 && (
+        <div className='w-full max-w-md'>
+          {formData === 'Pie' && <Pie data={data} options={options} />}
+          {formData === 'Bar' && <Bar data={data} options={options} />}
+          {formData === 'Doughnut' && <Doughnut data={data} options={options} />}
+          <select
+            className='w-full px-2 py-1 border rounded-lg text-sm focus:outline-none focus:border-blue-500 mt-2'
+            value={formData}
+            onChange={handleSelectChange}
+            required
+          >
+            <option value="Pie">Pie Chart</option>
+            <option value="Bar">Bar Graph</option>
+            <option value="Doughnut">Doughnut Chart</option>
+          </select>
+        </div>
+      )}
     </div>
   );
 }

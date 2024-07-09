@@ -48,37 +48,38 @@ export default function ExpensesView({ budgetData, setBudgetData }) {
             toast.error(error.response.data.message)
         }
     }
-   
+
     return (
-        <div className='flex flex-wrap items-center justify-center mb-4 w-full'>
+        <div className='flex flex-col items-center mb-4 w-full'>
             {viewExpenses ? (
-                <div className='flex flex-col items-center w-full'>
-                    <button onClick={handleView} className='mt-4 text-center bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 transform hover:scale-105 w-36 h-12'>
+                <div className='w-full lg:w-4/5 xl:w-4/5'>
+                    <button onClick={handleView} className='mt-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 transform hover:scale-95 px-3 py-1 text-sm'>
                         Hide Expenses
                     </button>
                     {arrayOfOrganisedExpenses.length > 0 ? (
-                        <div className='flex flex-wrap gap-4 w-full justify-center'>
+                        <div className='flex flex-wrap gap-4 justify-center'>
                             {arrayOfOrganisedExpenses.map((categoryExpenses, idx) => (
-                                <div key={idx} className='flex flex-col items-center mb-5 w-full max-w-xs aspect-square'>
-                                    <h1 className='text-xl mb-2'>{categoryExpenses.category}</h1>
+                                <div key={idx} className='flex flex-col items-center mb-5 w-full max-w-xs'>
+                                    <h1 className='text-lg mb-2'>{categoryExpenses.category}</h1>
                                     {categoryExpenses.expenses.map((expense, idx) => (
-                                        <div key={idx} className='bg-white shadow-md rounded-lg p-4 mb-4 w-full'>
-                                            <p><span className='font-bold'>Description:</span> {expense.description}</p>
-                                            <p><span className='font-bold'>Cost:</span> {expense.cost}</p>
-                                            <div className='flex justify-between mt-2 flex-col'>
-                                                {!location.includes('/single-budget') && 
-                                                <div> 
-                                                <button
-                                                className='bg-red-500 text-white rounded-lg px-2 py-1 hover:bg-red-600 transition duration-200 mb-3'
-                                                onClick={() => handleDelete(expense.id)}>
-                                                    Delete Expense
-                                                </button>
-                                                <EditExpense
-                                                expense={expense}
-                                                budgetId={budgetData.id}
-                                                setBudgetData={setBudgetData} />
-                                            </div>
-                                            }
+                                        <div key={idx} className='bg-white shadow-md rounded-lg p-2 mb-2 w-full'>
+                                            <p className='text-sm'><span className='font-bold'>Description:</span> {expense.description}</p>
+                                            <p className='text-sm'><span className='font-bold'>Cost:</span> {expense.cost}</p>
+                                            <div className='flex justify-between mt-2'>
+                                                {!location.includes('/single-budget') &&
+                                                    <div className='text-sm'>
+                                                        <button
+                                                            className='bg-red-500 text-white rounded-lg px-2 py-1 hover:bg-red-600 transition duration-200 mb-2 mr-2 text-xs'
+                                                            onClick={() => handleDelete(expense.id)}>
+                                                            Delete Expense
+                                                        </button>
+                                                        <EditExpense
+                                                            expense={expense}
+                                                            budgetId={budgetData.id}
+                                                            setBudgetData={setBudgetData}
+                                                        />
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
                                     ))}
@@ -86,12 +87,12 @@ export default function ExpensesView({ budgetData, setBudgetData }) {
                             ))}
                         </div>
                     ) : (
-                        <h1 className='text-center'>You have no expenses yet</h1>
+                        <h1 className='text-lg text-center'>You have no expenses yet</h1>
                     )}
                 </div>
             ) : (
                 <div className='flex flex-col items-center'>
-                    <button onClick={handleView} className='bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 transform hover:scale-105 w-36 h-12'>
+                    <button onClick={handleView} className='bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 transform hover:scale-95 px-3 py-1 text-sm'>
                         View Expenses
                     </button>
                 </div>

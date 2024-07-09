@@ -62,43 +62,39 @@ export default function Expense({ budgetId, setBudgetData }) {
 
 
     return (
-        <div className='flex flex-wrap items-center justify-center flex-col'>
+        <div className='flex flex-wrap items-center justify-center flex-col mb-4'>
             {viewExpenseForm ?
-                <div className='bg-white p-8 rounded-lg shadow-md w-full max-w-md mt-5 h-fit'>
-                    <h1 className='text-2xl font-bold mb-6 text-center'>Add An Expense</h1>
-                    <form onSubmit={onFormSubmit}>
-                        <div className='mb-4'>
-                            <label className='block text-gray-700'>Cost in £</label>
-                            <div>
-                                <input
-                                    className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500'
-                                    placeholder="10"
-                                    type="text"
-                                    name='cost'
-                                    onChange={handleChange}
-                                    value={formData.cost}
-                                    required
-                                />
-                            </div>
+                <div className='bg-white p-4 rounded-lg shadow-md w-full max-w-md mt-4'>
+                    <h1 className='text-lg font-bold mb-4 text-center'>Add An Expense</h1>
+                    <form onSubmit={onFormSubmit} className='flex flex-col'>
+                        <div className='mb-2'>
+                            <label className='block text-sm text-gray-700'>Cost in £</label>
+                            <input
+                                className='w-full px-2 py-1 border rounded-lg focus:outline-none focus:border-blue-500'
+                                placeholder="10"
+                                type="text"
+                                name='cost'
+                                onChange={handleChange}
+                                value={formData.cost}
+                                required
+                            />
+                        </div>
+                        <div className='mb-2'>
+                            <label className='block text-sm text-gray-700'>Description</label>
+                            <textarea
+                                className='w-full px-2 py-1 border rounded-lg focus:outline-none focus:border-blue-500'
+                                placeholder="..."
+                                type="text"
+                                name='description'
+                                onChange={handleChange}
+                                value={formData.description}
+                                required
+                            />
                         </div>
                         <div className='mb-4'>
-                            <label className='block text-gray-700'>Description</label>
-                            <div>
-                                <textarea
-                                    className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500'
-                                    placeholder="..."
-                                    type="text"
-                                    name='description'
-                                    onChange={handleChange}
-                                    value={formData.description}
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className='mb-6'>
-                            <label className='block text-gray-700'>Choose a category:</label>
+                            <label className='block text-sm text-gray-700'>Choose a category:</label>
                             <select
-                                className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500'
+                                className='w-full px-2 py-1 border rounded-lg focus:outline-none focus:border-blue-500'
                                 value={formData.category}
                                 onChange={handleSelectChange}
                                 required
@@ -114,15 +110,15 @@ export default function Expense({ budgetId, setBudgetData }) {
                                 <option value="Charity">Charity</option>
                             </select>
                         </div>
-                        <button className='w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200'>
+                        <button className='w-full bg-blue-500 text-white py-1 rounded-lg hover:bg-blue-600 transition duration-200 text-sm'>
                             Submit
                         </button>
                     </form>
-                    <button onClick={handleView} className='mt-5 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition duration-200'>
+                    <button onClick={handleView} className='mt-2 w-full bg-red-500 text-white py-1 rounded-lg hover:bg-red-600 transition duration-200 text-sm'>
                         Hide Expense Form
                     </button>
                 </div>
-                : <button onClick={handleView} className='bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 transform hover:scale-105' style={{ width: '150px', height: '50px' }}>
+                : <button onClick={handleView} className='bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 transform hover:scale-95 px-3 py-1 text-sm' style={{ width: '150px', height: '50px' }}>
                     Add Expense Form
                 </button>}
         </div>

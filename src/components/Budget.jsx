@@ -71,43 +71,49 @@ export default function Budget() {
 
     return (
         <div className='flex items-center flex-col min-h-screen bg-gray-100'>
-            <h1 className='text-3xl'>Your Budget</h1>
-            {budgetData && (<div>
+        <h1 className='text-3xl mb-5'>Your Budget</h1>
+        
+        {budgetData && (
+            <div className='w-full lg:w-4/5 xl:w-4/5 flex flex-col items-center'>
                 <BudgetGraph
                     budgetData={budgetData}
-                    setBudgetData={setBudgetData} />
+                    setBudgetData={setBudgetData}
+                />
 
-                <div className='w-4/5 mx-auto'>
+                <div className='w-full lg:w-4/5 xl:w-4/5 mt-8'>
                     <ExpensesView
                         budgetData={budgetData}
                         setBudgetData={setBudgetData}
                     />
                 </div>
+
                 <Expense
                     budgetId={budgetData.id}
                     setBudgetData={setBudgetData}
                 />
             </div>
-            )}
-            
-            <div className='flex flex-col items-center mt-5'>
-                <h2 className='text-2xl mb-2'>Past Budgets</h2>
-                <div className='flex flex-wrap justify-center'>
-                    {filteredBudgets.length > 0 &&
-                        filteredBudgets.map((budget, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => navigate(`/single-budgets/${budget.id}`)}
-                                className='bg-blue-500 text-white rounded-lg px-4 py-2 m-2 hover:bg-blue-600 transition duration-200'>
-                                View {monthsArray[budget.month - 1]} {budget.year}
-                            </button>
-                        ))
-                    }
-                </div>
+        )}
+
+        <div className='w-full lg:w-4/5 xl:w-4/5 flex flex-col items-center mt-8'>
+            <h2 className='text-2xl mb-2'>Past Budgets</h2>
+            <div className='flex flex-wrap justify-center'>
+                {filteredBudgets.length > 0 &&
+                    filteredBudgets.map((budget, idx) => (
+                        <button
+                            key={idx}
+                            onClick={() => navigate(`/single-budgets/${budget.id}`)}
+                            className='bg-blue-500 text-white rounded-lg px-4 py-2 m-2 hover:bg-blue-600 transition duration-200'>
+                            View {monthsArray[budget.month - 1]} {budget.year}
+                        </button>
+                    ))
+                }
             </div>
-            <DeleteBudget
-                budgetId={budgetData.id}
-                setBudgetData={setBudgetData} />
         </div>
+
+        <DeleteBudget
+            budgetId={budgetData.id}
+            setBudgetData={setBudgetData}
+        />
+    </div>
     );
 }
