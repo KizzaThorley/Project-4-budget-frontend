@@ -62,16 +62,16 @@ export default function ExpensesView({ budgetData, setBudgetData, hasCurrentBudg
                                                 <div className='flex justify-between mt-2'>
                                                     {!location.includes('/single-budget') && (
                                                         <div className='text-sm'>
-                                                            <button
-                                                                className='bg-red-500 text-white rounded-lg px-2 py-1 hover:bg-red-600 transition duration-200 mb-2 mr-2 text-xs'
-                                                                onClick={() => handleDelete(expense.id)}>
-                                                                Delete Expense
-                                                            </button>
                                                             <EditExpense
                                                                 expense={expense}
                                                                 budgetId={budgetData.id}
                                                                 setBudgetData={setBudgetData}
                                                             />
+                                                            <button
+                                                                className='bg-red-500 text-white rounded-lg px-2 py-1 hover:bg-red-600 transition duration-200 mb-2 mr-2 text-xs'
+                                                                onClick={() => handleDelete(expense.id)}>
+                                                                Delete Expense
+                                                            </button>
                                                         </div>
                                                     )}
                                                 </div>

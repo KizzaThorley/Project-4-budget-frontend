@@ -122,7 +122,7 @@ export default function EditExpense({ budgetId, setBudgetData, expense }) {
                         Hide Edit Form
                     </button>
                 </div>
-                : <button onClick={handleView} className='bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 transform hover:scale-105' style={{ width: '150px', height: '50px' }}>
+                : <button onClick={handleView} className='bg-blue-500 text-white rounded-lg px-2 py-1 hover:bg-blue-600 transition duration-200 mb-2 mr-2 text-xs'>
                     Edit Expense
                 </button>}
         </div>

@@ -20,7 +20,6 @@ export default function Budget() {
     }
 
     const navigate = useNavigate()
-    const [hasCurrentBudget, setHasCurrentBudget] = React.useState(false)
     const [budgetData, setBudgetData] = React.useState(false);
 
     const [allBudgets, setAllBudgets] = React.useState([]);
@@ -36,7 +35,7 @@ export default function Budget() {
             if (foundData) {
                 setBudgetData(foundData);
                 setAllBudgets(data);
-                setHasCurrentBudget(true)
+
             } else {
                 const newBudgetData = structuredClone(budgetTemplate);
                 newBudgetData.amount = 0;
@@ -48,7 +47,7 @@ export default function Budget() {
                 setBudgetData(postResponse.data);
                 data.push(postResponse.data)
                 setAllBudgets(data);
-                setHasCurrentBudget(true)
+
                 
             }
         } else {
@@ -61,7 +60,7 @@ export default function Budget() {
             });
             setBudgetData(postResponse.data);
             setAllBudgets([postResponse.data]);
-            setHasCurrentBudget(true)
+
         }
      } catch (error) {
         console.log(error);
@@ -79,11 +78,11 @@ export default function Budget() {
 
         console.log(budgetData);
     return (
-        hasCurrentBudget ? (
+        budgetData ? (
             <div className='flex items-center flex-col min-h-screen bg-gray-100'>
                 <h1 className='text-3xl mb-5'>Your Budget</h1>
 
-                {budgetData && (
+
                     <div className='w-full lg:w-4/5 xl:w-4/5 flex flex-col items-center'>
                         <BudgetGraph
                             budgetData={budgetData}
@@ -102,7 +101,7 @@ export default function Budget() {
                             setBudgetData={setBudgetData}
                         />
                     </div>
-                )}
+
 
                 <div className='w-full lg:w-4/5 xl:w-4/5 flex flex-col items-center mt-8'>
                     <h2 className='text-2xl mb-2'>Past Budgets</h2>
@@ -119,12 +118,12 @@ export default function Budget() {
                         }
                     </div>
                 </div>
-                {budgetData && (
+         
                 <DeleteBudget
                     budgetId={budgetData.id}
                     setBudgetData={setBudgetData}
                 />
-            )}
+            
             </div>
         ) : (
             <h1>Loading...</h1>
