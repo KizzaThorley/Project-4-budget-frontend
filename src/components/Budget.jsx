@@ -11,12 +11,13 @@ export default function Budget() {
     const currentMonth = new Date().getMonth() + 1;
     const currentYear = new Date().getFullYear();
     const budgetTemplate = {
-        amount: '',
+        amount: 0,
         id: '',
         month: '',
         year: '',
         expenses: [],
         owner: '',
+        savings: 0,
     }
 
     const navigate = useNavigate()
@@ -38,7 +39,6 @@ export default function Budget() {
 
             } else {
                 const newBudgetData = structuredClone(budgetTemplate);
-                newBudgetData.amount = 0;
                 newBudgetData.month = currentMonth;
                 newBudgetData.year = currentYear;
                 const postResponse = await axios.post('http://localhost:8000/api/budget/', newBudgetData, {
@@ -52,7 +52,6 @@ export default function Budget() {
             }
         } else {
             const newBudgetData = structuredClone(budgetTemplate);
-            newBudgetData.amount = 0;
             newBudgetData.month = currentMonth;
             newBudgetData.year = currentYear;
             const postResponse = await axios.post('http://localhost:8000/api/budget/', newBudgetData, {
@@ -76,7 +75,7 @@ export default function Budget() {
         : [];
 
 
-        console.log(budgetData);
+  
     return (
         budgetData ? (
             <div className='flex items-center flex-col min-h-screen bg-gray-100'>
@@ -99,6 +98,7 @@ export default function Budget() {
                         <Expense
                             budgetId={budgetData.id}
                             setBudgetData={setBudgetData}
+                            budgetData={budgetData}
                         />
                     </div>
 

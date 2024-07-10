@@ -13,13 +13,13 @@ import PastBudget from './components/PastBudget'
 
 
 export default function App() {
-const [isLoggedIn, setIsLoggedIn] = React.useState(localStorage.getItem('token'))
+  const [isLoggedIn, setIsLoggedIn] = React.useState(localStorage.getItem('token'))
 
   return (<Router>
-<NavBar
-isLoggedIn={isLoggedIn}
-setIsLoggedIn={setIsLoggedIn} />
- <ToastContainer
+    <NavBar
+      isLoggedIn={isLoggedIn}
+      setIsLoggedIn={setIsLoggedIn} />
+    <ToastContainer
       position="top-right"
       autoClose={5000}
       hideProgressBar={false}
@@ -30,17 +30,16 @@ setIsLoggedIn={setIsLoggedIn} />
       pauseOnHover
       draggable={false}
       theme="dark"
-      transition: Slide
-/>
-<Routes>
-  <Route path="/" element={<Home/>} />
-  <Route path="/sign-up" element={<SignUp/>} />
-  <Route path="/login" element={<Login
-  setIsLoggedIn={setIsLoggedIn}
-  />} />
-  <Route path="/my-budget" element={<Budget/>} />
-  <Route path='/single-budgets/:budgetId' element={<PastBudget />} />
-</Routes>
+      transition:Slide
+    />
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/login" element={<Login
+        setIsLoggedIn={setIsLoggedIn} />} />
+      <Route path="/my-budget" element={<Budget />} />
+      <Route path='/single-budgets/:budgetId' element={<PastBudget />} />
+    </Routes>
 
   </Router>
   )

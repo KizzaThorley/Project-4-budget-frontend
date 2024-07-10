@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-export default function EditExpense({ budgetId, setBudgetData, expense }) {
+export default function EditExpense({ budgetId, setBudgetData, expense, budgetData }) {
     const initalForm = {
         cost: expense.cost,
         budget: budgetId,
@@ -36,7 +36,10 @@ export default function EditExpense({ budgetId, setBudgetData, expense }) {
             });
             toast("Expense edited");
             setFormData(newFormData)
-            const { data } = await axios.get(`http://localhost:8000/api/budget/${budgetId}/`, {
+            const updateSavingsOnBudget = structuredClone(budgetData)
+            updateSavingsOnBudget.savings += expense.cost
+            updateSavingsOnBudget.savings -= newFormData.cost
+            const { data } = await axios.put(`http://localhost:8000/api/budget/${budgetId}/`, updateSavingsOnBudget, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBudgetData(data)

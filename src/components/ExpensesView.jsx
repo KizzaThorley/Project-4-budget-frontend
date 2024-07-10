@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import EditExpense from './EditExpense'
 import { useLocation } from 'react-router-dom'
 
-export default function ExpensesView({ budgetData, setBudgetData, hasCurrentBudget }) {
+export default function ExpensesView({ budgetData, setBudgetData, }) {
     const location = useLocation().pathname
 
     const [viewExpenses, setViewExpenses] = React.useState(false)
@@ -27,14 +27,16 @@ export default function ExpensesView({ budgetData, setBudgetData, hasCurrentBudg
         expenses
     }));
 
-    async function handleDelete(expenseId) {
+    async function handleDelete(expense) {
         try {
             const token = localStorage.getItem('token')
-            await axios.delete(`http://localhost:8000/api/expense/${expenseId}/`, {
+            await axios.delete(`http://localhost:8000/api/expense/${expense.id}/`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-
-            const { data } = await axios.get(`http://localhost:8000/api/budget/${budgetData.id}/`, {
+            
+            const updateSavingsOnBudget = structuredClone(budgetData)
+            updateSavingsOnBudget.savings +=  expense.cost
+            const { data } = await axios.put(`http://localhost:8000/api/budget/${budgetData.id}/`, updateSavingsOnBudget, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBudgetData(data)
@@ -66,10 +68,11 @@ export default function ExpensesView({ budgetData, setBudgetData, hasCurrentBudg
                                                                 expense={expense}
                                                                 budgetId={budgetData.id}
                                                                 setBudgetData={setBudgetData}
+                                                                budgetData={budgetData}
                                                             />
                                                             <button
                                                                 className='bg-red-500 text-white rounded-lg px-2 py-1 hover:bg-red-600 transition duration-200 mb-2 mr-2 text-xs'
-                                                                onClick={() => handleDelete(expense.id)}>
+                                                                onClick={() => handleDelete(expense)}>
                                                                 Delete Expense
                                                             </button>
                                                         </div>

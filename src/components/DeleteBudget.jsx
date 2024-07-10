@@ -7,6 +7,7 @@ export default function DeleteBudget({ budgetId, setBudgetData }) {
         month: new Date().getMonth() + 1,
         year: new Date().getFullYear(),
         amount: 0,
+        savings: 0,
     }
 
     async function handleDelete() {

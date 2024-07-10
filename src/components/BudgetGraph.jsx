@@ -35,8 +35,8 @@ export default function BudgetGraph({ budgetData, setBudgetData }) {
 
     labelsArray = chartData.map(data => data.category);
     dataArray = chartData.map(data => data.cost);
-    totalExpenses = budgetData.expenses.reduce((acc, expense) => acc + expense.cost, 0);
-    remainingBudget = spentBudget - totalExpenses;
+    // totalExpenses = budgetData.expenses.reduce((acc, expense) => acc + expense.cost, 0);
+    // remainingBudget = spentBudget - totalExpenses;
   }
 
   const data = {
@@ -45,12 +45,12 @@ export default function BudgetGraph({ budgetData, setBudgetData }) {
       data: dataArray,
       label: "Your Expenses",
       backgroundColor: [
-        'red', 'blue', 'orange', 'green',
-        'aqua', 'purple', 'yellow', 'gold'
+        "#DC143C", "#00BFFF", "#32CD32", "#DAA520",
+        "#9370DB", "#FF4500", "#00FFFF", "#FF69B4"
       ],
-      hoverBackgroundColor: [
-        '#39FF14', '#39FF14', '#39FF14', '#39FF14',
-        '#39FF14', '#39FF14', '#39FF14', '#39FF14'
+      hoverBackgroundColor:[
+        "#DC143C", "#00BFFF", "#32CD32", "#DAA520",
+        "#9370DB", "#FF4500", "#00FFFF", "#FF69B4"
       ],
       hoverOffset: 4
     }]
@@ -66,7 +66,7 @@ export default function BudgetGraph({ budgetData, setBudgetData }) {
   return (
     <div className='w-full flex flex-col items-center mb-8'>
       <div className='text-lg mb-4'>Overall: £{budgetData.amount}</div>
-      {budgetData.expenses.length > 0 && <div className='text-lg mb-4'>LeftOver: £{remainingBudget}</div>}
+      {budgetData.expenses.length > 0 && <div className='text-lg mb-4'>LeftOver: £{budgetData.savings}</div>}
       {!location.includes('/single-budget') &&
         <UpdateBudget
           budgetData={budgetData}
