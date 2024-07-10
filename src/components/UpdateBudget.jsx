@@ -35,7 +35,6 @@ export default function UpdateBudget({ budgetData, setBudgetData }) {
             const { data } = await axios.put(`http://localhost:8000/api/budget/${budgetData.id}/`, updateBudgetData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            data.expenses = updateBudgetData.expenses
             setBudgetData(data)
             setViewBudget(false)
 

@@ -61,6 +61,7 @@ export default function BudgetGraph({ budgetData, setBudgetData }) {
   const handleSelectChange = (e) => {
     setFormData(e.target.value);
   };
+  
 
   return (
     <div className='w-full flex flex-col items-center mb-8'>

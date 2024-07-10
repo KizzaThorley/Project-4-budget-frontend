@@ -122,6 +122,5 @@ export default function Expense({ budgetId, setBudgetData }) {
                     Add Expense Form
                 </button>}
         </div>
-
     )
 }

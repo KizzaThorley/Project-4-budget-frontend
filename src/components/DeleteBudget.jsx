@@ -33,12 +33,12 @@ export default function DeleteBudget({ budgetId, setBudgetData }) {
 
 
     return (
-        <div className='flex items-center justify-center mb-4 mt-4'>
-            <div className='flex flex-col items-center'>
-                <button onClick={handleDelete} className='mt-4 text-center bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200 transform hover:scale-105 w-36 h-12'>
-                    Reset Budget
-                </button>
+            <div className='flex items-center justify-center mb-4 mt-4'>
+                <div className='flex flex-col items-center'>
+                    <button onClick={handleDelete} className='mt-4 text-center bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200 transform hover:scale-105 w-36 h-12'>
+                        Reset Budget
+                    </button>
+                </div>
             </div>
-        </div>
-    )
+        )
 }
