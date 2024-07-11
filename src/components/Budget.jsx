@@ -26,17 +26,30 @@ export default function Budget() {
     const [allBudgets, setAllBudgets] = React.useState([]);
 
     async function getBudgets() {
-     try {
-        const token = localStorage.getItem('token');
-        const { data } = await axios.get('http://localhost:8000/api/budget/', {
-            headers: { Authorization: `Bearer ${token}` }
-        });
-        if (data) {
-            const foundData = data.find(budget => budget.month === currentMonth && budget.year === currentYear);
-            if (foundData) {
-                setBudgetData(foundData);
-                setAllBudgets(data);
+        try {
+            const token = localStorage.getItem('token');
+            const { data } = await axios.get('http://localhost:8000/api/budget/', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            if (data) {
+                const foundData = data.find(budget => budget.month === currentMonth && budget.year === currentYear);
+                if (foundData) {
+                    setBudgetData(foundData);
+                    setAllBudgets(data);
 
+                } else {
+                    const newBudgetData = structuredClone(budgetTemplate);
+                    newBudgetData.month = currentMonth;
+                    newBudgetData.year = currentYear;
+                    const postResponse = await axios.post('http://localhost:8000/api/budget/', newBudgetData, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    setBudgetData(postResponse.data);
+                    data.push(postResponse.data)
+                    setAllBudgets(data);
+
+
+                }
             } else {
                 const newBudgetData = structuredClone(budgetTemplate);
                 newBudgetData.month = currentMonth;
@@ -45,25 +58,12 @@ export default function Budget() {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setBudgetData(postResponse.data);
-                data.push(postResponse.data)
-                setAllBudgets(data);
+                setAllBudgets([postResponse.data]);
 
-                
             }
-        } else {
-            const newBudgetData = structuredClone(budgetTemplate);
-            newBudgetData.month = currentMonth;
-            newBudgetData.year = currentYear;
-            const postResponse = await axios.post('http://localhost:8000/api/budget/', newBudgetData, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setBudgetData(postResponse.data);
-            setAllBudgets([postResponse.data]);
-
+        } catch (error) {
+            console.log(error);
         }
-     } catch (error) {
-        console.log(error);
-     }
     }
 
     React.useEffect(() => {
@@ -74,33 +74,34 @@ export default function Budget() {
         ? allBudgets.filter(budget => !(budget.month === currentMonth && budget.year === currentYear))
         : [];
 
+const lifetimeSavings = allBudgets.length > 1 ? allBudgets.reduce((acc, budget) => acc + budget.savings, 0) : false
 
-  
     return (
         budgetData ? (
             <div className='flex items-center flex-col min-h-screen bg-gray-100'>
                 <h1 className='text-3xl mb-5'>Your Budget</h1>
+                {lifetimeSavings && <h1>Your Lifetime Savings = {lifetimeSavings}</h1>}
 
 
-                    <div className='w-full lg:w-4/5 xl:w-4/5 flex flex-col items-center'>
-                        <BudgetGraph
+                <div className='w-full lg:w-4/5 xl:w-4/5 flex flex-col items-center'>
+                    <BudgetGraph
+                        budgetData={budgetData}
+                        setBudgetData={setBudgetData}
+                    />
+
+                    <div className='w-full lg:w-4/5 xl:w-4/5 mt-8'>
+                        <ExpensesView
                             budgetData={budgetData}
                             setBudgetData={setBudgetData}
-                        />
-
-                        <div className='w-full lg:w-4/5 xl:w-4/5 mt-8'>
-                            <ExpensesView
-                                budgetData={budgetData}
-                                setBudgetData={setBudgetData}
-                            />
-                        </div>
-
-                        <Expense
-                            budgetId={budgetData.id}
-                            setBudgetData={setBudgetData}
-                            budgetData={budgetData}
                         />
                     </div>
+
+                    <Expense
+                        budgetId={budgetData.id}
+                        setBudgetData={setBudgetData}
+                        budgetData={budgetData}
+                    />
+                </div>
 
 
                 <div className='w-full lg:w-4/5 xl:w-4/5 flex flex-col items-center mt-8'>
@@ -118,12 +119,12 @@ export default function Budget() {
                         }
                     </div>
                 </div>
-         
+
                 <DeleteBudget
                     budgetId={budgetData.id}
                     setBudgetData={setBudgetData}
                 />
-            
+
             </div>
         ) : (
             <h1>Loading...</h1>

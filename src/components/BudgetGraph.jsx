@@ -15,9 +15,9 @@ export default function BudgetGraph({ budgetData, setBudgetData }) {
   let chartData = [];
   let labelsArray = [];
   let dataArray = [];
-  let spentBudget = budgetData.amount;
-  let totalExpenses = 0;
-  let remainingBudget = spentBudget;
+  // let spentBudget = budgetData.amount;
+  // let totalExpenses = 0;
+  // let remainingBudget = spentBudget;
 
   if (budgetData.expenses.length > 0) {
     organisedExpenseData = budgetData.expenses.reduce((acc, expense) => {
