@@ -74,12 +74,29 @@ export default function Budget() {
         ? allBudgets.filter(budget => !(budget.month === currentMonth && budget.year === currentYear))
         : [];
 
-const lifetimeSavings = allBudgets.length > 1 ? allBudgets.reduce((acc, budget) => acc + budget.savings, 0) : false
+    const lifetimeSavings = allBudgets.length > 1 ? allBudgets.reduce((acc, budget) => acc + budget.savings, 0) : false
+
+    function getPayload() {
+        const token = localStorage.getItem('token')
+        const parts = token.split('.')
+        return JSON.parse(atob(parts[1]))
+    }
+
+
+
+    function capitalizeFirstLetter(str) {
+        if (str.length === 0) {
+            return str;
+        }
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    const username = capitalizeFirstLetter(getPayload().username)
+   
 
     return (
         budgetData ? (
             <div className='flex items-center flex-col min-h-screen bg-gray-100'>
-                <h1 className='text-3xl mb-5'>Your Budget</h1>
+                <h1 className='text-3xl mb-5'>{username} Budget's</h1>
                 {lifetimeSavings && <h1>Your Lifetime Savings = {lifetimeSavings}</h1>}
 
 

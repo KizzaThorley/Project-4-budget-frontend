@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify'
 import Budget from './components/Budget'
 import PastBudget from './components/PastBudget'
+import History from './components/History'
 
 
 
@@ -33,12 +34,14 @@ export default function App() {
       transition:Slide
     />
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home
+      isLoggedIn={isLoggedIn} />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login
         setIsLoggedIn={setIsLoggedIn} />} />
       <Route path="/my-budget" element={<Budget />} />
       <Route path='/single-budgets/:budgetId' element={<PastBudget />} />
+      <Route path='/history' element={<History />} />
     </Routes>
 
   </Router>
