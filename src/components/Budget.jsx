@@ -68,6 +68,7 @@ export default function Budget() {
 
     React.useEffect(() => {
         getBudgets();
+        document.title = "Your Budget"
     }, []);
 
     const filteredBudgets = allBudgets && allBudgets.length > 0

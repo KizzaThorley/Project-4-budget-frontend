@@ -39,9 +39,12 @@ export default function App() {
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login
         setIsLoggedIn={setIsLoggedIn} />} />
+        {isLoggedIn && <>
       <Route path="/my-budget" element={<Budget />} />
       <Route path='/single-budgets/:budgetId' element={<PastBudget />} />
       <Route path='/history' element={<History />} />
+        </>
+        }
     </Routes>
 
   </Router>

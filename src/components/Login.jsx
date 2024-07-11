@@ -40,6 +40,10 @@ export default function Login( { setIsLoggedIn } ) {
         }
     }
 
+    React.useState(() => {
+    document.title = "Login"
+    },[])
+
     return (
         <div className='flex justify-center min-h-screen bg-gray-100'>
             <div className='bg-white p-8 rounded-lg shadow-md w-full max-w-md mt-5 h-fit'>

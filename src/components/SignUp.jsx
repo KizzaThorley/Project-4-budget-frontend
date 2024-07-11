@@ -22,6 +22,10 @@ export default function SignUp() {
     }
     // console.log(formData);
 
+    React.useState(() => {
+        document.title = "Sign-up"
+        },[])
+
     async function onFormSubmit(e) {
         e.preventDefault()
         try {

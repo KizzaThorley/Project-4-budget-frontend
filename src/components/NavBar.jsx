@@ -62,6 +62,12 @@ export default function NavBar({ isLoggedIn, setIsLoggedIn }) {
                   >
                     Your Budget
                   </Link>
+                  <Link
+                    to="/history"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Your History
+                  </Link>
                   <button
                     onClick={logout}
                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
