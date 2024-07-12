@@ -77,12 +77,20 @@ export default function Budget() {
         : [];
 
     
-        // const [lifetimeSavings, setLifetimeSavings] = React.useState(false)
+        React.useEffect(() => {
+           
+            const newAllBudgets = structuredClone(allBudgets);
 
-        // React.useEffect(() => {
-        //     allBudgets.length > 1 ? setLifetimeSavings(allBudgets.reduce((acc, budget) => acc + budget.savings, 0)) : setLifetimeSavings(false)
-        // }, [budgetData])
+            const index = newAllBudgets.findIndex(budget => budget.id === budgetData.id);
+    
+    
+            if (index !== -1) {
+                newAllBudgets[index] = structuredClone(budgetData);
+                setAllBudgets(newAllBudgets);
+            }
+        }, [budgetData]);
 
+        const lifetimeSavings =  allBudgets.length > 1 ? allBudgets.reduce((acc, budget) => acc + budget.savings, 0) : false
 
     function getPayload() {
         const token = localStorage.getItem('token')
@@ -99,13 +107,13 @@ export default function Budget() {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
     const username = capitalizeFirstLetter(getPayload().username)
-   
+
 
     return (
         budgetData ? (
             <div className='flex items-center flex-col min-h-screen bg-gray-100'>
                 <h1 className='text-3xl mb-5'>{username} Budget's</h1>
-
+                {lifetimeSavings && <h1 className='text-lg mb-4'>Lifetime savings {lifetimeSavings}</h1>}
                 <div className='w-full lg:w-4/5 xl:w-4/5 flex flex-col items-center'>
                     <BudgetGraph
                         budgetData={budgetData}
