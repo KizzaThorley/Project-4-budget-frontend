@@ -1,6 +1,7 @@
 import axios from 'axios';
 // import React from 'react'
 import { toast } from 'react-toastify';
+import { baseUrl } from '../config';
 
 export default function DeleteBudget({ budgetId, setBudgetData }) {
     const newBudgetData = {
@@ -14,10 +15,10 @@ export default function DeleteBudget({ budgetId, setBudgetData }) {
         try {
             const token = localStorage.getItem('token');
 
-            await axios.delete(`http://localhost:8000/api/budget/${budgetId}/`, {
+            await axios.delete(`${baseUrl}/api/budget/${budgetId}/`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            const { data } = await axios.post('http://localhost:8000/api/budget/', newBudgetData, {
+            const { data } = await axios.post(`${baseUrl}/api/budget/`, newBudgetData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             data.expenses = []

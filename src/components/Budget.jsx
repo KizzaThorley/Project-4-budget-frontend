@@ -5,6 +5,7 @@ import Expense from './Expense'
 import ExpensesView from './ExpensesView';
 import DeleteBudget from './DeleteBudget'
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../config';
 
 export default function Budget() {
     const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -28,7 +29,7 @@ export default function Budget() {
     async function getBudgets() {
         try {
             const token = localStorage.getItem('token');
-            const { data } = await axios.get('http://localhost:8000/api/budget/', {
+            const { data } = await axios.get(`${baseUrl}/api/budget/`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (data) {
@@ -41,7 +42,7 @@ export default function Budget() {
                     const newBudgetData = structuredClone(budgetTemplate);
                     newBudgetData.month = currentMonth;
                     newBudgetData.year = currentYear;
-                    const postResponse = await axios.post('http://localhost:8000/api/budget/', newBudgetData, {
+                    const postResponse = await axios.post(`${baseUrl}/api/budget/`, newBudgetData, {
                         headers: { Authorization: `Bearer ${token}` }
                     });
                     setBudgetData(postResponse.data);
@@ -54,7 +55,7 @@ export default function Budget() {
                 const newBudgetData = structuredClone(budgetTemplate);
                 newBudgetData.month = currentMonth;
                 newBudgetData.year = currentYear;
-                const postResponse = await axios.post('http://localhost:8000/api/budget/', newBudgetData, {
+                const postResponse = await axios.post(`${baseUrl}/api/budget/`, newBudgetData, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setBudgetData(postResponse.data);
@@ -75,7 +76,13 @@ export default function Budget() {
         ? allBudgets.filter(budget => !(budget.month === currentMonth && budget.year === currentYear))
         : [];
 
-    const lifetimeSavings = allBudgets.length > 1 ? allBudgets.reduce((acc, budget) => acc + budget.savings, 0) : false
+    
+        // const [lifetimeSavings, setLifetimeSavings] = React.useState(false)
+
+        // React.useEffect(() => {
+        //     allBudgets.length > 1 ? setLifetimeSavings(allBudgets.reduce((acc, budget) => acc + budget.savings, 0)) : setLifetimeSavings(false)
+        // }, [budgetData])
+
 
     function getPayload() {
         const token = localStorage.getItem('token')
@@ -98,8 +105,6 @@ export default function Budget() {
         budgetData ? (
             <div className='flex items-center flex-col min-h-screen bg-gray-100'>
                 <h1 className='text-3xl mb-5'>{username} Budget's</h1>
-                {lifetimeSavings && <h1>Your Lifetime Savings = {lifetimeSavings}</h1>}
-
 
                 <div className='w-full lg:w-4/5 xl:w-4/5 flex flex-col items-center'>
                     <BudgetGraph

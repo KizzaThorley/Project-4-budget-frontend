@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { baseUrl } from '../config'
 
 export default function Expense({ budgetId, setBudgetData, budgetData }) {
     const initalForm = {
@@ -31,13 +32,13 @@ export default function Expense({ budgetId, setBudgetData, budgetData }) {
             const newFormData = structuredClone(formData)
             newFormData.cost = Number(newFormData.cost)
             newFormData.budget = budgetId
-            const postResponse = await axios.post('http://localhost:8000/api/expense/', newFormData, {
+            const postResponse = await axios.post(`${baseUrl}/api/expense/`, newFormData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast("New Expense added");
             const updateSavingsOnBudget = structuredClone(budgetData)
             updateSavingsOnBudget.savings -=  newFormData.cost
-            const { data } = await axios.put(`http://localhost:8000/api/budget/${budgetId}/`, updateSavingsOnBudget, {
+            const { data } = await axios.put(`${baseUrl}/api/budget/${budgetId}/`, updateSavingsOnBudget, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setFormData(initalForm)

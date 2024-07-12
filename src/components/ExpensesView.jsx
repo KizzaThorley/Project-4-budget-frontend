@@ -3,6 +3,7 @@ import React from 'react'
 import { toast } from 'react-toastify'
 import EditExpense from './EditExpense'
 import { useLocation } from 'react-router-dom'
+import { baseUrl } from '../config'
 
 export default function ExpensesView({ budgetData, setBudgetData, }) {
     const location = useLocation().pathname
@@ -30,13 +31,13 @@ export default function ExpensesView({ budgetData, setBudgetData, }) {
     async function handleDelete(expense) {
         try {
             const token = localStorage.getItem('token')
-            await axios.delete(`http://localhost:8000/api/expense/${expense.id}/`, {
+            await axios.delete(`${baseUrl}/api/expense/${expense.id}/`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             
             const updateSavingsOnBudget = structuredClone(budgetData)
             updateSavingsOnBudget.savings +=  expense.cost
-            const { data } = await axios.put(`http://localhost:8000/api/budget/${budgetData.id}/`, updateSavingsOnBudget, {
+            const { data } = await axios.put(`${baseUrl}/api/budget/${budgetData.id}/`, updateSavingsOnBudget, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBudgetData(data)

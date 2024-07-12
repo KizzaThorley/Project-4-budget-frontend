@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios';
+import { baseUrl } from '../config';
 
 export default function UpdateBudget({ budgetData, setBudgetData }) {
 
@@ -34,7 +35,7 @@ export default function UpdateBudget({ budgetData, setBudgetData }) {
             updateBudgetData.amount = Number(formData.amount)
             const newSavings = (Number(formData.amount) - budgetData.amount) + budgetData.savings
             updateBudgetData.savings = newSavings
-            const { data } = await axios.put(`http://localhost:8000/api/budget/${budgetData.id}/`, updateBudgetData, {
+            const { data } = await axios.put(`${baseUrl}/api/budget/${budgetData.id}/`, updateBudgetData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBudgetData(data)

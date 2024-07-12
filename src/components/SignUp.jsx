@@ -2,6 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { baseUrl } from '../config'
 
 export default function SignUp() {
     const navigate = useNavigate()
@@ -29,11 +30,10 @@ export default function SignUp() {
     async function onFormSubmit(e) {
         e.preventDefault()
         try {
-            const { data } = await axios.post('http://localhost:8000/api/auth/register/', formData)
+            const { data } = await axios.post(`${baseUrl}/api/auth/register/`, formData)
             toast(data.message)
             navigate('/login')
         } catch (error) {
-            console.log(error.response.data.password_confirmation);
             if (error.response.data.username) {
                 toast.error(error.response.data.username[0], {
                     autoClose: 3000,

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../config';
 
 const months = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -16,7 +17,7 @@ export default function History() {
     const fetchBudgets = async () => {
       try {
         const token = localStorage.getItem('token');
-        const { data } = await axios.get('http://localhost:8000/api/budget/', {
+        const { data } = await axios.get(`${baseUrl}/api/budget/`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setAllBudgets(data);

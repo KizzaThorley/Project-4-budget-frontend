@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import BudgetGraph from './BudgetGraph';
 import ExpensesView from './ExpensesView';
+import { baseUrl } from '../config';
 
 export default function PastBudget() {
   const monthsArray = [
@@ -27,12 +28,12 @@ export default function PastBudget() {
 
   async function getBudgets() {
     const token = localStorage.getItem('token');
-    const allBudgetData = await axios.get('http://localhost:8000/api/budget/', {
+    const allBudgetData = await axios.get(`${baseUrl}/api/budget/`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     setAllBudgets(allBudgetData.data);
 
-    const { data } = await axios.get(`http://localhost:8000/api/budget/${budgetId}/`, {
+    const { data } = await axios.get(`${baseUrl}/api/budget/${budgetId}/`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     setBudgetData(data);

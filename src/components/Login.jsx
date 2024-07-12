@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { baseUrl } from '../config'
 
 export default function Login( { setIsLoggedIn } ) {
 
@@ -22,14 +23,14 @@ export default function Login( { setIsLoggedIn } ) {
     async function onFormSubmit(e) {
         e.preventDefault()
         try {
-            const { data } = await axios.post(`http://localhost:8000/api/auth/login/`, formData)
+            const { data } = await axios.post(`${baseUrl}/api/auth/login/`, formData)
 
             const token = data.token
 
             localStorage.setItem('token', token)
 
             setIsLoggedIn(localStorage.getItem('token'))
-            console.log('login successful');
+            // console.log('login successful');
             toast(data.message)
 
             navigate('/')
