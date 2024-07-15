@@ -42,7 +42,7 @@ export default function History() {
             to={budget.month === currentMonth && budget.year === currentYear ? '/my-budget' : `/single-budgets/${budget.id}`}
           >
             <h2 className="text-lg font-semibold mb-2">{months[budget.month - 1]}</h2>
-            <p><span className="font-semibold">Budget Amount:</span> ${budget.amount}</p>
+            <p><span className="font-semibold">Budget Amount:</span> £{budget.amount}</p>
             <p><span className="font-semibold">Savings:</span> ${budget.savings}</p>
           </Link>
         ))}
