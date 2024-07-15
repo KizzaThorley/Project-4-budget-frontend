@@ -172,10 +172,12 @@ In this example, it also shows my use of React Toastify to show messages to user
         }
     }
 ```
+
 **`getBudgets Function`**: This function handles fetching budget data from the backend. It checks if there is existing budget data for the current month and year.<br>
  If data is found, it updates the state with this data. If not, it creates a new budget template and posts it to the backend. <br> 
+ ![history page](public/readme/history.png)
 This feature automatically creates separate budgets for each month when users access the app. Past months are archived in a history page with limited functionality to prevent users from making changes or additions.
-![budget page](public/readme/budget-chart.png)
+![budget chart](public/readme/budget-chart.png)
 ```jsx
  if (budgetData.expenses.length > 0) {
     organisedExpenseData = budgetData.expenses.reduce((acc, expense) => {
